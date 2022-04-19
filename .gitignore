@@ -109,3 +109,4 @@ dist
 
 # The generated file
 GENERATED.md
+ignore/
