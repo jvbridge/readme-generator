@@ -109,15 +109,31 @@ function getfileName(fileName){
  * Initializer function for the whole project, gets called at the very end
  */
 function init() {
-    // get the answers
-    inquirer.prompt(questions).then((answers) =>{
-        // use the helper module to generate the mark down 
-        const fileData = generateMarkdown(answers);
-        // check for custom file name information
-        const fileName = getfileName(answers.fileName);
-        // write to the file
-        writeToFile(fileName, fileData);
-    });   
+    // first we ask the user if they want a default template as a demonstration
+    inquirer.prompt({
+        name:"default",
+        type:"confirm",
+        message: "Would you like to use the default values?"
+    }).then((answer) =>{
+        // they said yes! make the default for them
+        if (answer.default){
+            let rawData = fs.readFileSync("./utils/default.json");
+            let writeStr = generateMarkdown(JSON.parse(rawData));
+            writeToFile(DEFAULT_FILE_NAME, writeStr);
+            defaultReadme = true;
+            return;
+        }
+        // they said no, time to prompt them with the rest of the questions
+        inquirer.prompt(questions).then((answers) =>{
+            // use the helper module to generate the mark down 
+            const fileData = generateMarkdown(answers);
+            // check for custom file name information
+            const fileName = getfileName(answers.fileName);
+            // write to the file
+            writeToFile(fileName, fileData);
+        });   
+    });
+    
 }
 
 // Function call to initialize app
