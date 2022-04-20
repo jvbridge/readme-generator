@@ -3,6 +3,8 @@ const fs = require("fs");
 const inquirer = require("inquirer");
 const generateMarkdown = require("./utils/generateMarkdown");
 
+// TODO: make a way for the user to send files in as well
+
 /**
  * The default name of a file if the user didn't give us one
  * @type {string} 
@@ -117,8 +119,6 @@ function init() {
         writeToFile(fileName, fileData);
     });   
 }
-
-
 
 // Function call to initialize app
 init();
