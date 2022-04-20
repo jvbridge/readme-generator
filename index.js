@@ -7,8 +7,8 @@ const generateMarkdown = require("./utils/generateMarkdown");
  * The default name of a file if the user didn't give us one
  * @type {string} 
  */
-
 const DEFAULT_FILE_NAME = "GENERATED.md";
+
 /**
  * This is the set of questions to ask the user about their README they want to
  * create. 
@@ -93,8 +93,13 @@ function writeToFile(fileName, data) {
  * @returns {string} the file name we should use
  */
 function getfileName(fileName){
+    // if we don't have an answer return the default
     if (!fileName) return DEFAULT_FILE_NAME;
-    return DEFAULT_FILE_NAME;
+    // strip any spaces and make it lower case for custom file names for safety
+    let fileRet = fileName.split(' ').join("_").toLowerCase();
+    // return it with the correct extension
+    return (fileRet.endsWith(".md") ?  fileRet: fileRet + ".md");
+
 }
 
 /**
