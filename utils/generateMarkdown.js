@@ -53,10 +53,14 @@ ${licenseBadge}
     return ret;
 }
 
+function renderInstallationSection(installation){
+    return `
+## Installation
+${installation}`;
+}
 
 /** 
  * TODO: 
-
  * Installation
  * Usage
  * License
@@ -85,14 +89,18 @@ function generateMarkdown(data) {
 * [Tests](#Tests)
 * [Questions](#Questions)`;
 
+    // helper function for installation section
+    const installation = renderInstallationSection(data.installation);
+
     // helper functions for the license section
-    const licenseSection = renderLicenseSection(); 
+    const license = renderLicenseSection(); 
     
     // all of our hard work rendered together
     const ret = `# ${data.title}
 ${data.description}
 ${tableOfContents}
-${licenseSection}
+${installation}
+${license}
     `;
 return ret;
 }
