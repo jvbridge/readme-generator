@@ -78,7 +78,7 @@ ${usage}`;
 }
 
 /**
- * Returns the contributiong section to append to the readme generator
+ * Returns the contributing section to append to the readme generator
  * @param {string} contributing string passed in from the choices for the license
  * @returns {string} markdown to add to the generated file
  */
@@ -99,12 +99,19 @@ ${contributing}`;
 ${tests}`;
 }
 
-/** 
- * TODO: 
- * Tests
- * Questions
- */ 
+/**
+ * Returns the questions section to append to the readme generator
+ * @param {string} github string passed in from the choices for the license
+ * @returns {string} markdown to add to the generated file
+ */
+ function renderQuestionsSection (github){
+    const githubURL = `https://github.com/${github}`;
 
+    return `
+## Questions
+Any questions you may have should be directed to <a href="${githubURL}">my github</a>
+`;
+}
 /**
  * Generates markdown for the answers the user gave for the readme
  * @param {object} data - the answers object given by the inquirer prompts
@@ -137,7 +144,12 @@ function generateMarkdown(data) {
     // helper function for the contributing section 
     const contributing = renderContributingSection(data.contributing);
 
+    // helper function for tests
     const tests = renderTestsSection(data.tests);
+    
+    // helper function for questions
+    const questions = renderQuestionsSection(data.github);
+    
     // all of our hard work rendered together
     const ret = `# ${data.title}
 ${data.description}
@@ -147,6 +159,7 @@ ${usage}
 ${license}
 ${contributing}
 ${tests}
+${questions}
 `;
     return ret;
 }
