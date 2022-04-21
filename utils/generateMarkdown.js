@@ -16,7 +16,9 @@ function renderLicenseSection(license) {}
  * @returns {string} - the entire string to write out to a file
  */
 function generateMarkdown(data) {
-  let ret = `# ${data.title}\n${data.description}`;
+  let ret = `# ${data.title}
+  ${data.description}
+  `;
   return ret;
 }
 

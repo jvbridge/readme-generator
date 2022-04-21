@@ -2,7 +2,7 @@
     "userName": "Jonathan Bridge",
     "github": "jvbridge",
     "title": "readme-generator",
-    "description": "A readme generator using Node.js",
+    "description": "./default/description.txt",
     "installation": "Install node, download the files, and run `npm install` in the directory they're in",
     "usage": "Use `node index.html` to run the program",
     "license": "MIT",

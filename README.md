@@ -5,6 +5,8 @@ This profram will prompt the user for a few inputs before generating a README
 file with the name `GENERATED.md` so as not to over write any file you might 
 already have that's named `README.md`
 
+badges generated from https://gist.github.com/lukas-h/2a5d00690736b4c3a7ba
+
 ## Installation
 
 Requires node.js from https://nodejs.org/en/ to already be installed
