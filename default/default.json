@@ -6,7 +6,7 @@
     "installation": "./default/installation.md",
     "usage": "./default/usage.md",
     "license": "MIT",
-    "contributing": "Keep this open source and credit the author and any subesequent authors",
+    "contributing": "./default/contributing.md",
     "tests": "Extensive self testing",
     "fileName": ""
   }
