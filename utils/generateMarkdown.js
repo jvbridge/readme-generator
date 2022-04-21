@@ -46,12 +46,24 @@ function renderLicenseLink(license) {
 function renderLicenseSection(license) {
     const licenseBadge = renderLicenseBadge(license);
     ret = `
-    ## License
+## License
 
-    ${licenseBadge}
-    `;
+${licenseBadge}
+`;
     return ret;
 }
+
+
+/** 
+ * TODO: 
+
+ * Installation
+ * Usage
+ * License
+ * Contributing 
+ * Tests
+ * Questions
+ */ 
 
 /**
  * Generates markdown for the answers the user gave for the readme
@@ -59,11 +71,28 @@ function renderLicenseSection(license) {
  * @returns {string} - the entire string to write out to a file
  */
 function generateMarkdown(data) {
-    
+
+    // indentation is ignored for a portion of this code because template string
+    // literals care about white space
+
+    // hard code the table of contents
+    const tableOfContents = `
+## Table of Contents
+* [Installation](#Installation)
+* [Usage](#Usage)
+* [License](#License)
+* [Contributing](#Contributing)
+* [Tests](#Tests)
+* [Questions](#Questions)`;
+
+    // helper functions for the license section
     const licenseSection = renderLicenseSection(); 
     
+    // all of our hard work rendered together
     const ret = `# ${data.title}
-    ${data.description}
+${data.description}
+${tableOfContents}
+${licenseSection}
     `;
 return ret;
 }
