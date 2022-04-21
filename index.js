@@ -3,7 +3,8 @@ const fs = require("fs");
 const inquirer = require("inquirer");
 const generateMarkdown = require("./utils/generateMarkdown");
 
-// TODO: make a way for the user to send files in as well
+// reference to the default json file's JSON
+const defaultJson = require("./default/default.json");
 
 /**
  * The default name of a file if the user didn't give us one
@@ -19,12 +20,14 @@ const questions = [
     { // get the user's name
         type: "input",
         name: "userName",
-        message: "Tell me, what is your name?"
+        message: "For any of these answers you can specify a path to import a" +
+        " text file instead of typing the whole answer just start the answer " +
+        "with \"./\" \nTell me, what is your name?"
     },
     { // github username
         type: "input",
         name: "github",
-        message: "what is your github user name?"
+        message: "What is your github user name?"
     },
     { //  Project title
         type: "input",
@@ -61,7 +64,7 @@ const questions = [
     {   // Contribute
         type: "input",
         name: "contributing",
-        message: "Tell me the best way to contribute"
+        message: "Tell me the best way to contribute."
     },
     {   // Tests
         type: "input",
@@ -71,13 +74,14 @@ const questions = [
     {   // optional filename
         type: "input",
         name: "fileName",
-        message: "Give me a custom file name if you'd like one, otherwise leave this section blank"
+        message: "Give me a custom file name if you'd like one, otherwise "+ 
+        "leave this section blank"
     }
 ];
 
 
 /**
- * Writes to the given file what we want to 
+ * Writes to the given file  
  * @param {string} fileName - file name to write to
  * @param {string} data - the information to write to the file
  */
@@ -89,9 +93,8 @@ function writeToFile(fileName, data) {
 }
 
 /**
- * The 
- * @param {string} fileName - the answer the user gave to if they wanted a custom
- * file name
+ * Gets a file name to write to. If no input is given the default is used
+ * @param {string} fileName - user input string
  * @returns {string} the file name we should use
  */
 function getfileName(fileName){
@@ -105,7 +108,56 @@ function getfileName(fileName){
 }
 
 /**
- * @function
+ * checks if the user's input is in fact a path to a local file
+ * @param {string} input - the user's input string
+ * @returns {string} the original input if the 
+ * @returns {Promise<string>} The contents of the file if it is a path
+ */
+function checkPath(input){
+
+    // if there's no input or it's not formatted correctly
+    if (!input.startsWith("./")|| !input) { return input;}
+    console.log("found a potential path: ", input);
+
+    // otherwise use fs to try to get the file
+    try{
+      const ret = fs.readFileSync(input,"utf8");
+      console.log(`Imported ${input} successfully`);
+      return ret;
+    } catch (err){
+        console.error(`had an error reading ${input}`);
+        console.error(err);
+        return input;
+    }  
+}
+
+/**
+ * Imports any files that the user might want to use
+ * @param {object} answers - the answers
+ * @returns {object} answers with the key being the contents of files with the
+ * path provided 
+ */
+function importFiles(answers){
+    let ret = {};
+    console.log("checking for imported files... ");
+    for (let key in answers){
+        ret[key] = checkPath(answers[key]);
+    }
+    return ret;
+}
+
+/**
+ * Parses the answers given and writes it to a file as necessary
+ * @param {object} answers the user's answers
+ */
+function parseAnswers(answers){
+    const importedAnswers = importFiles(answers);
+    let writeStr = generateMarkdown(importedAnswers);
+    const fileName = getfileName(answers.fileName);
+    writeToFile(fileName, writeStr);
+}
+
+/**
  * Initializer function for the whole project, gets called at the very end
  */
 function init() {
@@ -117,23 +169,14 @@ function init() {
     }).then((answer) =>{
         // they said yes! make the default for them
         if (answer.default){
-            let rawData = fs.readFileSync("./utils/default.json");
-            let writeStr = generateMarkdown(JSON.parse(rawData));
-            writeToFile(DEFAULT_FILE_NAME, writeStr);
-            defaultReadme = true;
+            parseAnswers(defaultJson);
             return;
         }
         // they said no, time to prompt them with the rest of the questions
-        inquirer.prompt(questions).then((answers) =>{
-            // use the helper module to generate the mark down 
-            const fileData = generateMarkdown(answers);
-            // check for custom file name information
-            const fileName = getfileName(answers.fileName);
-            // write to the file
-            writeToFile(fileName, fileData);
+        inquirer.prompt(questions).then((answers) => {
+            parseAnswers(answers);
         });   
     });
-    
 }
 
 // Function call to initialize app
