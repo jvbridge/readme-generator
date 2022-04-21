@@ -53,17 +53,29 @@ ${licenseBadge}
     return ret;
 }
 
+/**
+ * Returns the installation section to append to the readme generator
+ * @param {string} installation string passed in from the choices for the license
+ * @returns {string} markdown to add to the generated file
+ */
 function renderInstallationSection(installation){
     return `
 ## Installation
 ${installation}`;
 }
 
+/**
+ * Returns the installation section to append to the readme generator
+ * @param {string} installation string passed in from the choices for the license
+ * @returns {string} markdown to add to the generated file
+ */
+function renderUseageSection (usage){
+    return `
+## usage
+${usage}`;
+}
 /** 
  * TODO: 
- * Installation
- * Usage
- * License
  * Contributing 
  * Tests
  * Questions
@@ -92,6 +104,9 @@ function generateMarkdown(data) {
     // helper function for installation section
     const installation = renderInstallationSection(data.installation);
 
+    // helper function for the usage section
+    const usage = renderUseageSection(data.usage);
+
     // helper functions for the license section
     const license = renderLicenseSection(); 
     
@@ -100,6 +115,7 @@ function generateMarkdown(data) {
 ${data.description}
 ${tableOfContents}
 ${installation}
+${usage}
 ${license}
     `;
 return ret;
