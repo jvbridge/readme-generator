@@ -73,19 +73,30 @@ ${installation}`;
  */
 function renderUseageSection (usage){
     return `
-## usage
+## Usage
 ${usage}`;
 }
 
 /**
  * Returns the contributiong section to append to the readme generator
- * @param {string} installation string passed in from the choices for the license
+ * @param {string} contributing string passed in from the choices for the license
  * @returns {string} markdown to add to the generated file
  */
 function renderContributingSection (contributing){
     return `
-## contributing
+## Contributing
 ${contributing}`;
+}
+
+/**
+ * Returns the contributiong section to append to the readme generator
+ * @param {string} tests string passed in from the choices for the license
+ * @returns {string} markdown to add to the generated file
+ */
+ function renderTestsSection (tests){
+    return `
+## Tests
+${tests}`;
 }
 
 /** 
@@ -126,6 +137,7 @@ function generateMarkdown(data) {
     // helper function for the contributing section 
     const contributing = renderContributingSection(data.contributing);
 
+    const tests = renderTestsSection(data.tests);
     // all of our hard work rendered together
     const ret = `# ${data.title}
 ${data.description}
@@ -134,6 +146,7 @@ ${installation}
 ${usage}
 ${license}
 ${contributing}
+${tests}
 `;
     return ret;
 }
