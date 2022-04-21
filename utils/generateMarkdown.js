@@ -50,6 +50,7 @@ function renderLicenseSection(license) {
     ret = `
 ## License
 Copyright ${year}
+
 ${licenseBadge}
 `;
     return ret;
@@ -149,7 +150,7 @@ function generateMarkdown(data) {
     
     // helper function for questions
     const questions = renderQuestionsSection(data.github);
-    
+
     // all of our hard work rendered together
     const ret = `# ${data.title}
 ${data.description}
