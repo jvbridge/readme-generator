@@ -4,7 +4,7 @@
     "title": "readme-generator",
     "description": "./default/description.md",
     "installation": "./default/installation.md",
-    "usage": "Use `node index.html` to run the program",
+    "usage": "./default/usage.md",
     "license": "MIT",
     "contributing": "Keep this open source and credit the author and any subesequent authors",
     "tests": "Extensive self testing",

@@ -45,9 +45,11 @@ function renderLicenseLink(license) {
  */
 function renderLicenseSection(license) {
     const licenseBadge = renderLicenseBadge(license);
+    const todayDate = new Date();
+    const year = todayDate.getFullYear();
     ret = `
 ## License
-
+Copyright ${year}
 ${licenseBadge}
 `;
     return ret;
@@ -74,9 +76,20 @@ function renderUseageSection (usage){
 ## usage
 ${usage}`;
 }
+
+/**
+ * Returns the contributiong section to append to the readme generator
+ * @param {string} installation string passed in from the choices for the license
+ * @returns {string} markdown to add to the generated file
+ */
+function renderContributingSection (contributing){
+    return `
+## contributing
+${contributing}`;
+}
+
 /** 
  * TODO: 
- * Contributing 
  * Tests
  * Questions
  */ 
@@ -107,9 +120,12 @@ function generateMarkdown(data) {
     // helper function for the usage section
     const usage = renderUseageSection(data.usage);
 
-    // helper functions for the license section
-    const license = renderLicenseSection(); 
+    // helper function for the license section
+    const license = renderLicenseSection(data.license); 
     
+    // helper function for the contributing section 
+    const contributing = renderContributingSection(data.contributing);
+
     // all of our hard work rendered together
     const ret = `# ${data.title}
 ${data.description}
@@ -117,8 +133,9 @@ ${tableOfContents}
 ${installation}
 ${usage}
 ${license}
-    `;
-return ret;
+${contributing}
+`;
+    return ret;
 }
 
 module.exports = generateMarkdown;
