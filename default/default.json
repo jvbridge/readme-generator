@@ -7,6 +7,6 @@
     "usage": "./default/usage.md",
     "license": "MIT",
     "contributing": "./default/contributing.md",
-    "tests": "Extensive self testing",
+    "tests": "./default/contributing.md",
     "fileName": ""
   }
