@@ -110,8 +110,7 @@ ${tests}`;
 
     return `
 ## Questions
-Any questions you may have should be directed to <a href="${githubURL}">my github</a>
-`;
+Any questions you may have should be directed to <a href="${githubURL}">my github</a>`;
 }
 /**
  * Generates markdown for the answers the user gave for the readme
